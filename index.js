@@ -1,8 +1,11 @@
 const express = require('express');
 const app = express();
 
+app.set('view engine', 'pug');
+app.use(express.static('assets'))
+
 app.get('/', function (req, res) {
-  res.send('Hello World!')
+  res.render('index', { title: 'Destiny', message: 'Hello Destiny!' })
 })
 
 app.listen(3000, function() {
