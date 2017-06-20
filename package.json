@@ -22,7 +22,7 @@
   "homepage": "https://github.com/carstenosu/destiny-web#readme",
   "dependencies": {
     "express": "^4.15.3",
-    "node-destiny": "^1.0.0",
+    "node-destiny": "^1.0.1",
     "pug": "^2.0.0-rc.2"
   }
 }
