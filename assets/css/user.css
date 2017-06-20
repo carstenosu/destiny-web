@@ -1,0 +1,20 @@
+.characterName {
+    display: inline-block;
+}
+
+.characterName strong {
+    color: white;
+    display: block;
+}
+
+.lightLevel {
+    color: #f5dc56;
+}
+
+.lightLevel:before {
+    display: inline-block;
+    content: '✦';
+    font-size: inherit;
+    margin-right: 2px;
+    line-height: 0;
+}
