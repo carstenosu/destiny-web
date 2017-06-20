@@ -1,20 +1,22 @@
 const express = require('express');
 const router = express.Router();
 const destiny = require('node-destiny');
+const apiKey = process.env.BUNGIE_API_KEY;
 
-const destinyClient = new destiny.DestinyClient(process.env.BUNGIE_API_KEY, 'https://www.bungie.net/platform/Destiny');
+const destinyClient = new destiny.DestinyClient(apiKey, 'https://www.bungie.net/platform/Destiny');
 
 // User landing page
 router.get('/user/:gamertag', function(req, res) {
 
   let charSummaries = [];
+  const membershipType = '1';
 
-  destinyClient.search('1', req.params.gamertag).then( response => {
+  destinyClient.search(membershipType, req.params.gamertag).then( response => {
 
     const membership = response.data.Response[0];
     const membershipId = membership.membershipId;
 
-    destinyClient.getAccountSummary( 1, membershipId ).then( response => {
+    destinyClient.getAccountSummary( membershipType, membershipId ).then( response => {
 
       console.log('Got Membership Summary');
         const characters = response.data.Response.data.characters;
@@ -33,7 +35,28 @@ router.get('/user/:gamertag', function(req, res) {
         const characterSummary3Promise = destinyClient.getCharacterSummary( membershipType, membershipId, characterId3 );
 
         Promise.all( [characterSummary1Promise, characterSummary2Promise, characterSummary3Promise]).then( characterSummaries => {
-            res.render('user', { characterSummaries: characterSummaries, title: `Destiny - ${req.params.gamertag}`, message: `${req.params.gamertag}` })
+            
+            characterSummaries.forEach( characterSummary => {
+                const characterResponse = characterSummary.data.Response.data
+                const definitions = characterSummary.data.Response.definitions;
+
+                const genderHash = characterResponse.characterBase.genderHash;
+                const raceHash = characterResponse.characterBase.raceHash;
+                const classHash = characterResponse.characterBase.classHash;
+
+                const genderName = definitions.genders[genderHash].genderName;
+                const raceName = definitions.races[raceHash].raceName;
+                const className = definitions.classes[classHash].className;
+
+                characterResponse.characterBase.genderName = genderName;
+                characterResponse.characterBase.raceName = raceName;
+                characterResponse.characterBase.className = className;
+
+                charSummaries.push(characterResponse);
+            })
+            
+            
+            res.render('user', { characterSummaries: charSummaries, title: `Destiny - ${req.params.gamertag}`, message: `${req.params.gamertag}` })
         })
     })
   })
