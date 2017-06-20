@@ -5,6 +5,16 @@ const apiKey = process.env.BUNGIE_API_KEY;
 
 const destinyClient = new destiny.DestinyClient(apiKey, 'https://www.bungie.net/platform/Destiny');
 
+router.post('/user', function(req,res){
+  console.log('form submitted');
+  const gamertag = req.body.gamertag;
+  if ( gamertag ) {
+    res.redirect('/user/'+gamertag);
+  } else {
+    res.redirect('/error');
+  }
+})
+
 // User landing page
 router.get('/user/:gamertag', function(req, res) {
 
