@@ -1,0 +1,15 @@
+extends layout.pug
+
+block scripts
+    link(rel='stylesheet', href='/css/foundation.css')
+    link(rel='stylesheet', href='/css/user.css')
+
+block content    
+  body
+    div(class='row')
+        div(class='medium-4 medium-offset-4 columns characterSummary' style='background-image: url(https://www.bungie.net/' + characterSummary.backgroundPath +');')  
+            img(src='https://www.bungie.net/' + characterSummary.emblemPath )
+            div(class='characterName')
+                strong #{characterSummary.characterBase.raceName} #{characterSummary.characterBase.className}
+                span(class='lightLevel') #{characterSummary.characterBase.powerLevel}
+            

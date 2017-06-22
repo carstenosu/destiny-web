@@ -13,7 +13,33 @@ router.post('/user', function(req,res){
   } else {
     res.redirect('/error');
   }
-})
+});
+
+router.get('/user/:gamertag/:membershipType/:membershipId/:characterId', function(req, res){
+
+  destinyClient.definitions = true;
+
+  destinyClient.getCharacterSummary(req.params.membershipType, req.params.membershipId, req.params.characterId).then( response => {
+    const characterSummary = response.data.Response.data;
+    const definitions = response.data.Response.definitions;
+    const genderHash = characterSummary.characterBase.genderHash;
+    const raceHash = characterSummary.characterBase.raceHash;
+    const classHash = characterSummary.characterBase.classHash;
+
+    const genderName = definitions.genders[genderHash].genderName;
+    const raceName = definitions.races[raceHash].raceName;
+    const className = definitions.classes[classHash].className;
+
+    characterSummary.characterBase.genderName = genderName;
+    characterSummary.characterBase.raceName = raceName;
+    characterSummary.characterBase.className = className;
+
+    characterSummary.membershipType = req.params.membershipType;
+    characterSummary.membershipId = req.params.membershipId;
+    characterSummary.gamertag = req.params.gamertag;
+    res.render('character', { characterSummary, title: `Destiny - ${req.params.gamertag}`})
+  })
+});
 
 // User landing page
 router.get('/user/:gamertag', function(req, res) {
@@ -62,6 +88,9 @@ router.get('/user/:gamertag', function(req, res) {
                 characterResponse.characterBase.raceName = raceName;
                 characterResponse.characterBase.className = className;
 
+                characterResponse.membershipType = membershipType;
+                characterResponse.membershipId = membershipId;
+                characterResponse.gamertag = req.params.gamertag;
                 charSummaries.push(characterResponse);
             })
             

@@ -9,8 +9,9 @@ block content
     div(class='row')
         each characterSummary in characterSummaries
             div(class='medium-4 columns characterSummary' style='background-image: url(https://www.bungie.net/' + characterSummary.backgroundPath +');')  
-                img(src='https://www.bungie.net/' + characterSummary.emblemPath )
-                div(class='characterName')
-                    strong #{characterSummary.characterBase.raceName} #{characterSummary.characterBase.className}
-                    span(class='lightLevel') #{characterSummary.characterBase.powerLevel}
+                a(href=`/user/${characterSummary.gamertag}/${characterSummary.membershipType}/${characterSummary.membershipId}/${characterSummary.characterBase.characterId}`)
+                    img(src='https://www.bungie.net/' + characterSummary.emblemPath )
+                    div(class='characterName')
+                        strong #{characterSummary.characterBase.raceName} #{characterSummary.characterBase.className}
+                        span(class='lightLevel') #{characterSummary.characterBase.powerLevel}
             
