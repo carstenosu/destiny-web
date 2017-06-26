@@ -19,8 +19,10 @@ router.post('/user', function(req,res){
 });
 
 router.get('/user/:gamertag/:membershipType/:membershipId/:characterId', function(req, res){
-  const characterSummary = handlers.getCharacterSummary(req,res);
-  res.render('character', { characterSummary, title: `Destiny - ${req.params.gamertag}`})
+  const characterSummaryPromise = handlers.getCharacterSummary(req,res).then( response => {
+    res.render('character', { characterSummary: response, title: `Destiny - ${req.params.gamertag}`})
+  });
+  
 });
 
 // User landing page
