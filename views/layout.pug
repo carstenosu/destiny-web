@@ -1,16 +1,15 @@
 html
   head
     title Destiny - #{title}
+    link(rel='stylesheet', href='/materialize-css/dist/css/materialize.min.css')
     block scripts
-        link(rel='stylesheet', href='/css/foundation.css')
-        script(src='/js/what-input.js')
-        script(src='/js/foundation.js')
   body
-    block content
+    div(class='container')
+      block content
     block footer
       #footer
         div(class='row')
-            div(class='medium-4 medium-offset-4 columns')
+            div(class='col m4 m-offset-4')
                 p(class='text-center') Some Footer Content
     script(src='/js/jquery.js') 
-    script(src='../node_modules/materialize-css/dist/js/materialize.min.js')
+    script(src='/materialize-css/dist/js/materialize.min.js')
