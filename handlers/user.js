@@ -57,7 +57,7 @@ function loadUser( gamertag ) {
 
 }
 
-function getCharacterSummary( membershipType, membershipId, characterId ) {
+function getCharacterSummary( gamertag, membershipType, membershipId, characterId ) {
     console.log('hander for getcharacter summary');
 
     destinyClient.definitions = true;
@@ -77,9 +77,9 @@ function getCharacterSummary( membershipType, membershipId, characterId ) {
         characterSummary.characterBase.raceName = raceName;
         characterSummary.characterBase.className = className;
 
-        characterSummary.membershipType = req.params.membershipType;
-        characterSummary.membershipId = req.params.membershipId;
-        characterSummary.gamertag = req.params.gamertag;
+        characterSummary.membershipType = membershipType;
+        characterSummary.membershipId = membershipId;
+        characterSummary.gamertag = gamertag;
         return characterSummary;
     })
 }

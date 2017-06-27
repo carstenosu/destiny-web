@@ -23,6 +23,7 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
+    "materialize-css": "^0.99.0",
     "node-destiny": "^1.0.1",
     "pug": "^2.0.0-rc.2"
   }

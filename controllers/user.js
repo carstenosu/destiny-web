@@ -19,7 +19,7 @@ router.post('/user', function(req,res){
 });
 
 router.get('/user/:gamertag/:membershipType/:membershipId/:characterId', function(req, res){
-  const characterSummaryPromise = userHandler.getCharacterSummary(req.params.membershipType, req.params.membershipId, req.params.caharcterId).then( response => {
+  const characterSummaryPromise = userHandler.getCharacterSummary(req.params.gamertag, req.params.membershipType, req.params.membershipId, req.params.characterId).then( response => {
     res.render('character', { characterSummary: response, title: `Destiny - ${req.params.gamertag}`})
   });
   
